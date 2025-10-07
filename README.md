@@ -27,6 +27,19 @@ Instalar as dependências do PHP
 composer install
 ```
 
+Instalar as denpendências do Node.js
+```
+npm install
+
+```
+
+Executar as blibliotecas Node.js
+```
+npm run dev
+```
+
+## Comandos utilizados com frequencia
+
 Gerar a chave para o arquivo `.env`.
 ```
 php artisan key:generate
@@ -35,5 +48,7 @@ php artisan key:generate
 Executar as migrantion para criar a base de dados e as tabelas.
 ```
 php artisan migrate
+
 ```
+
 

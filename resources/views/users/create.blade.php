@@ -1,39 +1,35 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('layouts.admin')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Celke</title>
-</head>
+@section('content')
+    <div class="content">
+        <div class="content-title">
+            <h1 class="page-title">Cadastrar Usuário</h1>
+            <a href="" class="btn-primary">Listar</a>
+        </div>
 
-<body>
-    <h1>Cadastrar Usuário</h1>
+        <x-alert/>
 
-    @if (session('success'))
-        <p style="color: green">{{ session('success') }}</p>
-    @else
-        <p style="color: red">{{ session('error') }}</p>
-    @endif
+        <form action="{{ route('user.store') }}" method="post" class="form-container">
+            @csrf
 
-    <form action="{{ route('user.store') }}" method="post">
-        @csrf
-        <label for="name">Nome:</label>
-        <input type="text" name="name" id="name" required value="{{ old('name') }}">
-        <br>
+            <div class="mb-4">
+                <label class="form-label" for="name">Nome:</label>
+                <input class="form-input" type="text" name="name" id="name" required value="{{ old('name') }}">
+            </div>
 
-        <label for="email">E-mail:</label>
-        <input type="email" name="email" id="email" required value="{{ old('email') }}">
-        <br>
+            <div class="mb-4">
+                <label class="form-label" for="email">E-mail:</label>
+                <input class="form-input" type="email" name="email" id="email" required value="{{ old('email') }}">
+            </div>
 
-        <label for="password">Senha:</label>
-        <input type="password" name="password" id="password" required value="{{ old('password') }}">
-        <br>
+            <div class="mb-4">
+                <label class="form-label" for="password">Senha:</label>
+                <input class="form-input" type="password" name="password" id="password" required
+                    value="{{ old('password') }}">
+            </div>
 
-        <button type="submit">Cadastrar</button>
+            <button type="submit" class="btn-success">Cadastrar</button>
 
-    </form>
-</body>
-
-</html>
+        </form>
+    </div>
+@endsection
