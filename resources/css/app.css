@@ -52,7 +52,7 @@
     }
 
     .page-title{
-        @apply text-2xl
+        @apply text-2xl font-bold
     }
 
     /* === Fim do Conteudo da Página === */
@@ -71,6 +71,29 @@
     }
 
     /* === Fim Formulario === */
+
+    /* === Início Tabela === */
+    .table-container{
+        @apply overflow-x-auto bg-white shadow-md rounded-lg
+    }
+
+    .table{
+        @apply min-w-full border-collapse w-full
+    }
+
+    .table-header{
+        @apply bg-blue-400 text-white uppercase text-sm leading-normal
+    }
+
+    .table-header th{
+        @apply py-3 px-6 text-left;
+    }
+
+    .table-header .center{
+        @apply text-center
+    }
+
+    /* === Fim Tabela === */
 
     /* Início Botões */
     .btn-primary{

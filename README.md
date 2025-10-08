@@ -45,10 +45,17 @@ Gerar a chave para o arquivo `.env`.
 php artisan key:generate
 ```
 
-Executar as migrantion para criar a base de dados e as tabelas.
+Executar uma migrantion para criar a base de dados e as tabelas.
 ```
 php artisan migrate
 
 ```
+
+Cria um arquivo Request com valiadções do formulário.
+```
+php artisan make:request NomeDoRequest
+
+```
+
 
 

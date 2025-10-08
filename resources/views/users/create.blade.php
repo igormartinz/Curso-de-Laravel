@@ -4,7 +4,7 @@
     <div class="content">
         <div class="content-title">
             <h1 class="page-title">Cadastrar Usuário</h1>
-            <a href="" class="btn-primary">Listar</a>
+            <a href="{{ route('user.index') }}" class="btn-primary">Listar</a>
         </div>
 
         <x-alert/>
@@ -14,17 +14,17 @@
 
             <div class="mb-4">
                 <label class="form-label" for="name">Nome:</label>
-                <input class="form-input" type="text" name="name" id="name" required value="{{ old('name') }}">
+                <input class="form-input" type="text" name="name" id="name" value="{{ old('name') }}">
             </div>
 
             <div class="mb-4">
                 <label class="form-label" for="email">E-mail:</label>
-                <input class="form-input" type="email" name="email" id="email" required value="{{ old('email') }}">
+                <input class="form-input" type="text" name="email" id="email" value="{{ old('email') }}">
             </div>
 
             <div class="mb-4">
                 <label class="form-label" for="password">Senha:</label>
-                <input class="form-input" type="password" name="password" id="password" required
+                <input class="form-input" type="password" name="password" id="password"
                     value="{{ old('password') }}">
             </div>
 
