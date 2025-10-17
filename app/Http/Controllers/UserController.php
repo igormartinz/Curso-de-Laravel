@@ -12,7 +12,7 @@ class UserController extends Controller
     // Listar os usuários
     public function index(){
         // Recuperar os registros do banco de dados
-        $users = User::orderByDesc('id')->paginate(3);
+        $users = User::oldest('id')->paginate(3);
 
         // Carregar a VIEW
         return view('users.index', ['users' => $users]);
@@ -41,5 +41,23 @@ class UserController extends Controller
         } catch (Exception $e) {
             return back()->withInput()->with('error', 'Usuário não cadastrado');
         }
+    }
+
+    public function edit(User $user){
+
+        return view('users.edit', ['user' => $user]);
+    }
+
+    public function update(UserRequest $request, User $user){
+        try{
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email
+            ]);
+
+            return redirect()->route('user.index')->with('success', 'Usuário editado com sucesso!');
+        }catch(Exception $e){
+            return back()->withInput()->with('error', 'Usuário não editado');
+        } 
     }
 }

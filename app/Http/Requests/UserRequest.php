@@ -21,22 +21,24 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $user = $this->route('user');
+
         return [
             "name" => 'required',
-            "email" => 'required|email|unique:users',
-            "password" => 'required|min:6'
+            "email" => 'required|email|unique:users,email,' . ($user ? $user->id : null) ,
+            "password" => 'required_if:password,!=,null|min:6'
         ];
     }
 
-    public function messages(): array
-    {
-        return [
-            'name.required' => 'Campo nome é obrigatorio!',
-            'email.required' => 'Campo e-mail é obrigatorio!',
-            'email.email' => 'Insira um email valido!',
-            'email.unique' => 'O e-mail já está cadastrado!',
-            'password.required' => 'Campo senha é obrigatorio!',
-            'password.min' => 'Senha com no mínimo :min caracteres!'
-        ];
-    }
+    // public function messages(): array
+    // {
+    //     return [
+    //         'name.required' => 'Campo nome é obrigatorio!',
+    //         'email.required' => 'Campo e-mail é obrigatorio!',
+    //         'email.email' => 'Insira um email valido!',
+    //         'email.unique' => 'O e-mail já está cadastrado!',
+    //         'password.required_if' => 'Campo senha é obrigatorio!',
+    //         'password.min' => 'Senha com no mínimo :min caracteres!'
+    //     ];
+    // }
 }
