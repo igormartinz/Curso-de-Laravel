@@ -43,76 +43,119 @@
 
     /* Estilização de Conteudo da Página */
 
-    .content{
+    .content {
         @apply flex-1 px-8 py-6 mx-auto w-full
     }
 
-    .content-title{
+    .content-title {
         @apply flex justify-between items-center mb-6
     }
 
-    .page-title{
+    .page-title {
         @apply text-2xl font-bold
     }
 
     /* === Fim do Conteudo da Página === */
 
     /* === Início Formulario === */
-    .form-container{
+    .form-container {
         @apply mt-6 bg-white shadow-md rounded-lg p-6
     }
 
-    .form-label{
+    .form-label {
         @apply block text-sm font-semibold
     }
 
-    .form-input{
+    .form-input {
         @apply border p-2 w-full mt-1 rounded-md border-blue-100 shadow-sm focus:border-blue-300 focus:ring-blue-200 focus:outline-none
     }
 
     /* === Fim Formulario === */
 
     /* === Início Tabela === */
-    .table-container{
+    .table-container {
         @apply overflow-x-auto bg-white shadow-md rounded-lg
     }
 
-    .table{
+    .table {
         @apply min-w-full border-collapse w-full
     }
 
-    .table-header{
+    .table-header {
         @apply bg-blue-400 text-white uppercase text-sm leading-normal
     }
 
-    .table-header th{
-        @apply py-3 px-6 text-left;
+    .table-header th {
+        @apply py-3 px-6 text-left
     }
 
-    .table-header .center{
+    .table-header .center {
         @apply text-center
+    }
+
+    .table-body {
+        @apply text-gray-700 text-sm font-light
+    }
+
+    .table-row {
+        @apply border-b border-gray-200 hover:bg-blue-50 transition
+    }
+
+    .table-cell {
+        @apply py-3 px-6
+    }
+
+    .table-actions {
+        @apply py-3 px-6 text-center
     }
 
     /* === Fim Tabela === */
 
-    /* Início Botões */
-    .btn-primary{
+    /* === Inicio Paginação === */
+
+    .pagination {
+        @apply mt-2 p-3
+    }
+
+    /* === Fim Paginação === */
+
+    /* === Início Botões === */
+
+    /* Botão Azul */
+    .btn-primary {
         @apply bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors
     }
 
-    .btn-success{
+    /* Botão Azul Claro */
+    .btn-info {
+        @apply bg-cyan-500 text-white px-4 py-2 rounded-md hover:bg-cyan-600 transition-colors
+    }
+
+    /* Botão Verde */
+    .btn-success {
         @apply p-2 bg-green-500 text-white rounded-md hover:bg-green-600 cursor-pointer transition-colors
+    }
+
+    /* Botão Amarelo */
+    .btn-warning {
+        @apply p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 cursor-pointer transition-colors
+    }
+
+    /* Botão Vermelho */
+    .btn-danger {
+        @apply p-2 bg-red-500 text-white rounded-md hover:bg-red-600 cursor-pointer transition-colors
     }
 
     /* === Fim Botões === */
 
     /* Início Alertas */
-    .alert-success{
-        @apply p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 
+    .alert-success {
+        @apply p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100
     }
 
-    .alert-error{
-        @apply p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 
+    .alert-error {
+        @apply p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100
     }
+
     /* === Fim Alertas === */
 }
