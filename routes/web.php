@@ -9,10 +9,13 @@ Route::get('/', function () {
 
 Route::get('/index-user', [UserController::class, 'index'])->name('user.index');
 
-Route::get('/create-user', [UserController::class, 'create'])->name('user.create');
+Route::get('/show-user/{user}', [UserController::class, 'show'])->name('user.show');
 
+Route::get('/create-user', [UserController::class, 'create'])->name('user.create');
 Route::post('/store-user', [UserController::class, 'store'])->name('user.store');
 
 Route::get('/edit-user/{user}', [UserController::class, 'edit'])->name('user.edit');
-
 Route::put('/update-user/{user}', [UserController::class, 'update'])->name('user.update');
+
+Route::get('/edit-password/{user}', [UserController::class, 'edit_password'])->name('password.edit');
+Route::put('/update-password/{user}', [UserController::class, 'update_password'])->name('password.update');

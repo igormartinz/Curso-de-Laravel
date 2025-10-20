@@ -24,8 +24,8 @@ class UserRequest extends FormRequest
         $user = $this->route('user');
 
         return [
-            "name" => 'required',
-            "email" => 'required|email|unique:users,email,' . ($user ? $user->id : null) ,
+            "name" => 'required_if:name,!=,null',
+            "email" => 'required_if:email,!=,null|email|unique:users,email,' . ($user ? $user->id : null) ,
             "password" => 'required_if:password,!=,null|min:6'
         ];
     }
