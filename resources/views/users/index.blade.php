@@ -28,7 +28,12 @@
                                 <a href="{{ route('user.show', ['user' => $user->id]) }}" class="btn-primary">Visualizar</a>
                                 <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="btn-warning">Editar</a>
                                 <a href="{{ route('password.edit', ['user' => $user->id]) }}" class="btn-warning">Editar Senha</a>
-                                <a href="" class="btn-danger">Apagar</a>
+                                <form id="delete-form-{{ $user->id }}" action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
+                                    @csrf
+                                    @method('delete')
+
+                                    <button type="button" class="btn-danger" onclick="confirmDelete({{ $user->id }})">Apagar</button>
+                                </form>
                             </td>
                         </tr>
                     @empty

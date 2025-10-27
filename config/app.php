@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Sao_Paulo', //Limpar cache do laravel e reiniciar o servidor apor alteração
 
     /*
     |--------------------------------------------------------------------------

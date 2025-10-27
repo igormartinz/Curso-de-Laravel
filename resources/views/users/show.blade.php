@@ -4,10 +4,17 @@
     <div class="content">
         <div class="content-title">
             <h1 class="page-title">Detalhes do Usuário</h1>
-            <span>
+            <span class="flex space-x-1">
                 <a href="{{ route('user.index') }}" class="btn-info">Listar</a>
                 <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="btn-warning">Editar</a>
                 <a href="{{ route('password.edit', ['user' => $user->id]) }}" class="btn-warning">Editar Senha</a>
+                <form id="delete-form-{{ $user->id }}" action="{{ route('user.destroy', ['user' => $user->id]) }}"
+                    method="POST">
+                    @csrf
+                    @method('delete')
+
+                    <button type="button" class="btn-danger" onclick="confirmDelete({{ $user->id }})">Apagar</button>
+                </form>
             </span>
         </div>
 

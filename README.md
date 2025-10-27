@@ -12,11 +12,6 @@ Criar o projeto com laravel
 composer create-project laravel/laverel .
 ```
 
-Inciar o projeto criado com laravel
-
-```
-php artisan serve
-```
 
 ## Como rodar o projeto baixado 
 
@@ -27,16 +22,27 @@ Instalar as dependências do PHP
 composer install
 ```
 
+Inciar o servidor com laravel
+
+```
+php artisan serve
+```
+
 Instalar as denpendências do Node.js
 ```
 npm install
-
 ```
 
 Executar as blibliotecas Node.js
 ```
 npm run dev
 ```
+
+Instalar as bibliotecas para apresentar o alerta personalizado.
+```
+npm install sweetalert2
+```
+
 
 ## Comandos utilizados com frequencia
 
