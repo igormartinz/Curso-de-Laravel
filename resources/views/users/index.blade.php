@@ -4,8 +4,10 @@
     <div class="content">
         <div class="content-title">
             <h1 class="page-title">Listar os Usuário</h1>
-            <a href="{{ route('user.create') }}" class="btn-success">Cadastrar</a>
-
+            <div>
+                <a href="{{ route('user.generate-pdf-users') }}" class="btn-warning">Gerar PDF</a>
+                <a href="{{ route('user.create') }}" class="btn-success">Cadastrar</a>
+            </div>
         </div>
 
         <x-alert />
@@ -25,14 +27,20 @@
                             <td class="table-cell">{{ $user->name }}</td>
                             <td class="table-cell">{{ $user->email }}</td>
                             <td class="table-actions">
+                                <a href="{{ route('user.generate-pdf', ['user' => $user->id]) }}" class="btn-warning">Gerar
+                                    PDF</a>
+
                                 <a href="{{ route('user.show', ['user' => $user->id]) }}" class="btn-primary">Visualizar</a>
                                 <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="btn-warning">Editar</a>
-                                <a href="{{ route('password.edit', ['user' => $user->id]) }}" class="btn-warning">Editar Senha</a>
-                                <form id="delete-form-{{ $user->id }}" action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
+                                <a href="{{ route('password.edit', ['user' => $user->id]) }}" class="btn-warning">Editar
+                                    Senha</a>
+                                <form id="delete-form-{{ $user->id }}"
+                                    action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
                                     @csrf
                                     @method('delete')
 
-                                    <button type="button" class="btn-danger" onclick="confirmDelete({{ $user->id }})">Apagar</button>
+                                    <button type="button" class="btn-danger"
+                                        onclick="confirmDelete({{ $user->id }})">Apagar</button>
                                 </form>
                             </td>
                         </tr>

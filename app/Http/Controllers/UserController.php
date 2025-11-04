@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Support\Facades\Crypt;
 
@@ -99,5 +100,26 @@ class UserController extends Controller
         } catch (Exception $e) {
             return redirect()->route('user.index')->with('error', 'Usuário não excluído');
         }
+    }
+
+    public function generatePdf(User $user){
+        try{
+            //Carregar a string com HTML/conteúdo e determinar a orientação e o tamanho do arquivo
+            $pdf = Pdf::loadView('users.generate-pdf', ['user' => $user])->setPaper('a4', 'portrait');
+    
+            $pdfPath = storage_path("app/public/view_user_{$user->id}.pdf");
+        }catch(Exception $e){
+            return redirect()->route('user.show', ['user' => $user->id])->with('error', 'E-mail não enviado!');
+        }
+    }
+
+    public function generatePdfUsers(User $users){
+        
+        $users = User::all();
+
+        $pdf = Pdf::loadView('users.generate-pdf-users', ['users' => $users])->setPaper('a4', 'portrait');
+
+        // Fazer o download do arquivo
+        return $pdf->download("lista-.pdf");
     }
 }

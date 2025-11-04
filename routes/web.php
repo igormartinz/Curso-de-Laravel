@@ -21,3 +21,7 @@ Route::get('/edit-password/{user}', [UserController::class, 'edit_password'])->n
 Route::put('/update-password/{user}', [UserController::class, 'update_password'])->name('password.update');
 
 Route::delete('/destroy-user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
+
+Route::get('/generate-pdf-user/{user}', [UserController::class, 'generatePdf'])->name('user.generate-pdf');
+
+Route::get('/generate-pdf-users', [UserController::class, 'generatePdfUsers'])->name('user.generate-pdf-users');

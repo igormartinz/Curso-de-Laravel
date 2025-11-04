@@ -63,5 +63,9 @@ php artisan make:request NomeDoRequest
 
 ```
 
+Cria uma classe para enviar e-mail
+```
+php artisan make:mail NomeDaClasse
 
+```
 
