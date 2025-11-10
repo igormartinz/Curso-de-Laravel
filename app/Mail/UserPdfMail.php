@@ -5,6 +5,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -16,7 +17,7 @@ class UserPdfMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(public $pdfPath, public $user)
     {
         //
     }
@@ -27,7 +28,7 @@ class UserPdfMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'User Pdf Mail',
+            subject: 'Relatório de registro',
         );
     }
 
@@ -37,7 +38,8 @@ class UserPdfMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.user-report',
+            text: 'emails.user-report-text'
         );
     }
 
@@ -48,6 +50,8 @@ class UserPdfMail extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        return [
+            Attachment::fromPath($this->pdfPath)
+        ];
     }
 }

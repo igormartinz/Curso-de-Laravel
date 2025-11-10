@@ -43,6 +43,22 @@ Instalar as bibliotecas para apresentar o alerta personalizado.
 npm install sweetalert2
 ```
 
+Para a funncionalidade enviar e-mail funcionar, necessário alterar as credenciais do servidor de envio de e-mail no arquivo .env.
+- Utilizar o servidor fake durante o desenvolvimento [Acessar envio gratuito de e-mail](https://mailtrap.io/)
+- Utilizar o servidor Iagente no ambiente de produção [Acessar envio gratuito de e-mail](https://login.iagente.com.br/solicitacao-conta-smtp)
+
+```
+# MAIL_MAILER=smtp
+# MAIL_SCHEME=null
+# MAIL_HOST=smart.iagentesmtp.com.br
+# MAIL_PORT=587
+# MAIL_USERNAME=name-do-usuario-na-iagente
+# MAIL_PASSWORD=senha-do-usuario-na-iagente
+# MAIL_FROM_ADDRESS="colocar-email-remetente@dominio.com.br"
+# MAIL_FROM_NAME="${APP_NAME}"
+```
+
+
 
 ## Comandos utilizados com frequencia
 
