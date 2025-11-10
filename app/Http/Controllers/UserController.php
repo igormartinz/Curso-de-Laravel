@@ -6,34 +6,63 @@ use App\Http\Requests\UserRequest;
 use App\Mail\UserPdfMail;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Exception;
-use Illuminate\Support\Facades\Crypt;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
 
     // Listar os usuários
-    public function index()
+    public function index(Request $request)
     {
         // Recuperar os registros do banco de dados
-        $users = User::oldest('id')->paginate(3);
+        // $users = User::oldest('id')->paginate(3);
+
+        $users = User::when(
+            $request->filled('name'),
+            fn($query) =>
+            $query->whereLike('name', '%' . $request->name . '%')
+        )
+            ->when(
+                $request->filled('email'),
+                fn($query) =>
+                $query->whereLike('email', '%' . $request->email . '%')
+            )
+            ->when(
+                $request->filled('start_date_registration'),
+                fn($query) =>
+                $query->where('created_at', '>=', Carbon::parse($request->start_date_registration))
+            )
+            ->when(
+                $request->filled('end_date_registration'),
+                fn($query) =>
+                $query->where('created_at', '<=', Carbon::parse($request->end_date_registration))
+            )
+            ->oldest('id')
+            ->paginate(3)
+            ->withQueryString();
 
         // Carregar a VIEW
-        return view('users.index', ['users' => $users]);
+        return view('users.index', [
+            'users' => $users,
+            'name' => $request->name,
+            'email' => $request->email,
+            'start_date_registration' => $request->start_date_registration,
+            'end_date_registration' => $request->end_date_registration
+        ]);
     }
 
     // Carregar o formulário cadastrar novo usuário
     public function create()
     {
-
         // Carregar a VIEW
         return view('users.create');
     }
 
     public function show(User $user)
     {
-
         return view('users.show', ['user' => $user]);
     }
 
@@ -104,11 +133,12 @@ class UserController extends Controller
         }
     }
 
-    public function generatePdf(User $user){
-        try{
+    public function generatePdf(User $user)
+    {
+        try {
             //Carregar a string com HTML/conteúdo e determinar a orientação e o tamanho do arquivo
             $pdf = Pdf::loadView('users.generate-pdf', ['user' => $user])->setPaper('a4', 'portrait');
-    
+
             // Definir o caminho temporário para salvar o arquivo
             $pdfPath = storage_path("app/public/view_user_{$user->id}.pdf");
 
@@ -119,20 +149,20 @@ class UserController extends Controller
             Mail::to($user->email)->send(new UserPdfMail($pdfPath, $user));
 
             // Remover o arquivo após o envio do e-mail
-            if(file_exists($pdfPath)){
+            if (file_exists($pdfPath)) {
                 unlink($pdfPath);
             }
 
             // Redirecionar o usuário, enviar a mensagem de sucesso
             return redirect()->route('user.show', ['user' => $user->id])->with('success', 'E-mail enviado com sucesso');
-
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return redirect()->route('user.show', ['user' => $user->id])->with('error', 'E-mail não enviado!');
         }
     }
 
-    public function generatePdfUsers(User $users){
-        
+    public function generatePdfUsers(User $users)
+    {
+
         $users = User::all();
 
         $pdf = Pdf::loadView('users.generate-pdf-users', ['users' => $users])->setPaper('a4', 'portrait');

@@ -72,6 +72,14 @@
 
     /* === Fim Formulario === */
 
+    /* === Inicio Formulario de Pesquisa === */
+
+    .form-search{
+        @apply pb-3 grid xl:grid-cols-5 md:grid-cols-2 gap-2 items-end
+    }
+
+    /* === Fim Formulario de Pesquisa === */
+
     /* === Início Tabela === */
     .table-container {
         @apply overflow-x-auto bg-white shadow-md rounded-lg
@@ -123,12 +131,12 @@
 
     /* Botão Azul */
     .btn-primary {
-        @apply bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors
+        @apply p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors
     }
 
     /* Botão Azul Claro */
     .btn-info {
-        @apply bg-cyan-500 text-white px-4 py-2 rounded-md hover:bg-cyan-600 transition-colors
+        @apply p-2 bg-cyan-500 text-white rounded-md hover:bg-cyan-600 transition-colors
     }
 
     /* Botão Verde */

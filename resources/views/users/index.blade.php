@@ -12,6 +12,19 @@
 
         <x-alert />
 
+        <form class="form-search">
+            <input type="text" class="form-input" name="name" placeholder="Digite o nome" value="{{ $name }}">
+            <input type="text" class="form-input" name="email" placeholder="Digite o e-mail" value="{{ $email }}">
+
+            <input type="datetime-local" class="form-input" name="start_date_registration" value="{{ $start_date_registration }}">
+            <input type="datetime-local" class="form-input" name="end_date_registration" value="{{ $end_date_registration }}">
+
+            <div class="flex gap-1">
+                <button class="btn-primary">Pesquisar</button>
+                <a href="{{ route('user.index') }}" class="btn-warning">Limpar</a>
+            </div>
+        </form>
+
         <div class="table-container">
             <table class="table">
                 <tr class="table-header">
