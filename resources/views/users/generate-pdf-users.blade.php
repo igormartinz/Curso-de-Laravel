@@ -9,8 +9,9 @@
     </title>
 </head>
 
-<body>
-    <h2>Lista Usuários</h2>
+<body style="font-size: 12px;">
+
+    <h2 style="text-align: center">Lista Usuários</h2>
 
     @forelse ($users as $user)
         ID: {{ $user->id }}<br>

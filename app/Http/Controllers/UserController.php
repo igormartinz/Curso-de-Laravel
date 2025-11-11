@@ -160,14 +160,48 @@ class UserController extends Controller
         }
     }
 
-    public function generatePdfUsers(User $users)
+    public function generatePdfUsers(Request $request)
     {
+        try {
+            $users = User::when(
+                $request->filled('name'),
+                fn($query) =>
+                $query->whereLike('name', '%' . $request->name . '%')
+            )
+                ->when(
+                    $request->filled('email'),
+                    fn($query) =>
+                    $query->whereLike('email', '%' . $request->email . '%')
+                )
+                ->when(
+                    $request->filled('start_date_registration'),
+                    fn($query) =>
+                    $query->where('created_at', '>=', Carbon::parse($request->start_date_registration))
+                )
+                ->when(
+                    $request->filled('end_date_registration'),
+                    fn($query) =>
+                    $query->where('created_at', '<=', Carbon::parse($request->end_date_registration))
+                )
+                ->oldest('name')
+                ->get();
 
-        $users = User::all();
+            // Verifica a quantidade se é superior ao limmite para gerar PDF
+            if ($users->count('id') > 500) {
+                return redirect()->route('user.index', [
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'start_date_registration' => $request->start_date_registration,
+                    'end_date_registration' => $request->end_date_registration
+                ])->with('error', 'Limite ultrapassado, geração de no máximo 500 registros');
+            }
 
-        $pdf = Pdf::loadView('users.generate-pdf-users', ['users' => $users])->setPaper('a4', 'portrait');
+            $pdf = Pdf::loadView('users.generate-pdf-users', ['users' => $users])->setPaper('a4', 'portrait');
 
-        // Fazer o download do arquivo
-        return $pdf->download("lista-.pdf");
+            // Fazer o download do arquivo
+            return $pdf->download("lista-usuários.pdf");
+        } catch (Exception $e) {
+            return redirect()->route('user.index')->with('error', 'PDF não gerado');
+        }
     }
 }
