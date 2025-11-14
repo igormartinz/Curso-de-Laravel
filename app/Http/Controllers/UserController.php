@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -203,5 +204,74 @@ class UserController extends Controller
         } catch (Exception $e) {
             return redirect()->route('user.index')->with('error', 'PDF não gerado');
         }
+    }
+
+    public function generateCSVUsers(Request $request)
+    {
+        $users = User::when(
+            $request->filled('name'),
+            fn($query) =>
+            $query->whereLike('name', '%' . $request->name . '%')
+        )
+            ->when(
+                $request->filled('email'),
+                fn($query) =>
+                $query->whereLike('email', '%' . $request->email . '%')
+            )
+            ->when(
+                $request->filled('start_date_registration'),
+                fn($query) =>
+                $query->where('created_at', '>=', Carbon::parse($request->start_date_registration))
+            )
+            ->when(
+                $request->filled('end_date_registration'),
+                fn($query) =>
+                $query->where('created_at', '<=', Carbon::parse($request->end_date_registration))
+            )
+            ->oldest('name')
+            ->get();
+
+        // Verifica a quantidade se é superior ao limmite para gerar PDF
+        if ($users->count('id') > 500) {
+            return redirect()->route('user.index', [
+                'name' => $request->name,
+                'email' => $request->email,
+                'start_date_registration' => $request->start_date_registration,
+                'end_date_registration' => $request->end_date_registration
+            ])->with('error', 'Limite ultrapassado, geração de no máximo 500 registros');
+        }
+
+        // Criar arquivo temporário
+        $csvFile = tempnam(sys_get_temp_dir(), 'csv_' . Str::ulid());
+
+        // Abrir o arquivo na forma de escrita
+        $openFile = fopen($csvFile, 'w');
+
+        // Criar o cabeçalho do Excel
+        $header = ['id', 'Nome', 'E-mail', 'Data de Cadastro'];
+
+        // Escrever o cabrçalho no arquivo
+        fputcsv($openFile, $header, ';');
+
+        // Ler os registros recuperados do banco de dados
+        foreach ($users as $user) {
+
+            //  Criar um array com os dados da linha do Excel
+            $userArray = [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'created_at' => \Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:i:s')
+            ];
+
+            // Escrever o cabrçalho no arquivo
+            fputcsv($openFile, $userArray, ';');
+        }
+
+        // Fechar o arquivo após a escrita
+        fclose($openFile);
+
+        // Download do arquivo
+        return response()->download($csvFile, 'lista-usuários-' . Str::ulid() . '.csv');
     }
 }
